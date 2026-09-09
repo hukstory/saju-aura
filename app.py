@@ -4,6 +4,7 @@ import datetime
 import io
 import json
 import re
+import textwrap
 
 # ==================================================================
 # 페이지 설정
@@ -13,7 +14,7 @@ st.set_page_config(page_title="운명사주 아우라 대시보드", layout="wid
 # ==================================================================
 # 프리미엄 디자인 (폰트 / 배경 / 색상 시스템)
 # ==================================================================
-st.markdown('''
+st.markdown(textwrap.dedent('''
     <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <style>
@@ -138,7 +139,7 @@ st.markdown('''
         border-bottom: 3px solid #b8923f !important;
     }
     </style>
-''', unsafe_allow_html=True)
+'''), unsafe_allow_html=True)
 
 # ==================================================================
 # 로그인 게이트
@@ -549,7 +550,7 @@ with tab2:
         st.info("아직 등록된 신청 고객이 없습니다. 왼쪽 사이드바에서 등록해주세요.")
 
     st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
         <div style="display: flex; justify-content: center; align-items: center;">
             <form action="/" method="get">
                 <button type="submit" name="run_pdf" value="true" style="
@@ -565,7 +566,7 @@ with tab2:
                 ">프리미엄 사주분석 PDF생성 시작</button>
             </form>
         </div>
-    """, unsafe_allow_html=True)
+    """), unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
 
     query_params = st.query_params
