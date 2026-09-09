@@ -14,132 +14,140 @@ st.set_page_config(page_title="운명사주 아우라 대시보드", layout="wid
 # ==================================================================
 # 프리미엄 디자인 (폰트 / 배경 / 색상 시스템)
 # ==================================================================
-st.markdown(textwrap.dedent('''
-    <link rel="stylesheet" as="style" crossorigin
-        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
-    <style>
-    html, body, [class*="css"]  {
-        font-family: 'Pretendard', -apple-system, 'Apple SD Gothic Neo', sans-serif !important;
-    }
+st.markdown(
+    '<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />',
+    unsafe_allow_html=True
+)
 
-    /* 은은한 골드 대각선 패턴 + 크림 그라데이션 배경 */
-    .stApp {
-        background-color: #faf8f4;
-        background-image:
-            repeating-linear-gradient(135deg, rgba(184,146,63,0.045) 0px, rgba(184,146,63,0.045) 1px, transparent 1px, transparent 26px),
-            linear-gradient(180deg, #fbf9f5 0%, #f7f4ee 100%);
-        color: #1a1a1a;
-    }
+_RAW_CSS = '''
+html, body, [class*="css"]  {
+    font-family: 'Pretendard', -apple-system, 'Apple SD Gothic Neo', sans-serif !important;
+}
 
-    /* 메인 타이틀 - 골드→네이비 그라데이션 */
-    .main-title {
-        font-size: 2.6rem;
-        font-weight: 800;
-        letter-spacing: -1px;
-        background: linear-gradient(100deg, #8a6a1f 0%, #1f2a44 65%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 2px;
-    }
-    .sub-title {
-        font-size: 1.05rem;
-        color: #6b6558;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-    }
-    .gold-divider {
-        height: 2px;
-        background: linear-gradient(90deg, #b8923f 0%, rgba(184,146,63,0.05) 100%);
-        border: none;
-        margin: 22px 0 26px 0;
-    }
+/* 은은한 골드 대각선 패턴 + 크림 그라데이션 배경 */
+.stApp {
+    background-color: #faf8f4;
+    background-image:
+        repeating-linear-gradient(135deg, rgba(184,146,63,0.045) 0px, rgba(184,146,63,0.045) 1px, transparent 1px, transparent 26px),
+        linear-gradient(180deg, #fbf9f5 0%, #f7f4ee 100%);
+    color: #1a1a1a;
+}
 
-    h2, h3 { color: #1f2a44 !important; font-weight: 800 !important; }
+/* 메인 타이틀 - 골드→네이비 그라데이션 */
+.main-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(100deg, #8a6a1f 0%, #1f2a44 65%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 2px;
+}
+.sub-title {
+    font-size: 1.05rem;
+    color: #6b6558;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.gold-divider {
+    height: 2px;
+    background: linear-gradient(90deg, #b8923f 0%, rgba(184,146,63,0.05) 100%);
+    border: none;
+    margin: 22px 0 26px 0;
+}
 
-    /* 사이드바 - 다크 네이비 + 골드 포인트 */
-    section[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #14182a 0%, #1c2138 100%);
-    }
-    section[data-testid="stSidebar"] * {
-        color: #ecebe6 !important;
-    }
-    section[data-testid="stSidebar"] h1, section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] h3 {
-        color: #e0b866 !important;
-    }
-    section[data-testid="stSidebar"] input, section[data-testid="stSidebar"] textarea,
-    section[data-testid="stSidebar"] select {
-        background-color: #232842 !important;
-        color: #f4eedd !important;
-        border: 1px solid #3a3f5c !important;
-    }
-    section[data-testid="stSidebar"] .stButton > button {
-        background: linear-gradient(135deg, #b8923f 0%, #e0b866 100%) !important;
-        color: #14182a !important;
-        font-weight: 800 !important;
-        border: none !important;
-    }
-    section[data-testid="stSidebar"] hr { border-color: #3a3f5c !important; }
+h2, h3 { color: #1f2a44 !important; font-weight: 800 !important; }
 
-    /* KPI 카드 - 카테고리별 강조색 */
-    .kpi-card {
-        background: #ffffff;
-        border-radius: 14px;
-        padding: 20px 20px;
-        text-align: center;
-        box-shadow: 0 4px 14px rgba(20,24,42,0.06);
-        border-left: 5px solid #cccccc;
-    }
-    .kpi-blue   { border-left-color: #2563eb; }
-    .kpi-green  { border-left-color: #059669; }
-    .kpi-gold   { border-left-color: #b8923f; }
-    .kpi-purple { border-left-color: #7c3aed; }
-    .kpi-num { font-size: 27px; font-weight: 800; color: #14182a; }
-    .kpi-label { font-size: 13px; color: #8a8578; margin-top: 6px; font-weight: 600; }
+/* 사이드바 - 다크 네이비 + 골드 포인트 */
+section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #14182a 0%, #1c2138 100%);
+}
+section[data-testid="stSidebar"] * {
+    color: #ecebe6 !important;
+}
+section[data-testid="stSidebar"] h1, section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] h3 {
+    color: #e0b866 !important;
+}
+section[data-testid="stSidebar"] input, section[data-testid="stSidebar"] textarea,
+section[data-testid="stSidebar"] select {
+    background-color: #232842 !important;
+    color: #f4eedd !important;
+    border: 1px solid #3a3f5c !important;
+}
+section[data-testid="stSidebar"] .stButton > button {
+    background: linear-gradient(135deg, #b8923f 0%, #e0b866 100%) !important;
+    color: #14182a !important;
+    font-weight: 800 !important;
+    border: none !important;
+}
+section[data-testid="stSidebar"] hr { border-color: #3a3f5c !important; }
 
-    /* 채널 카드 (상단 5개) */
-    .channel-card {
-        background: #ffffff;
-        border-radius: 12px;
-        padding: 16px 10px;
-        text-align: center;
-        box-shadow: 0 2px 10px rgba(20,24,42,0.05);
-        border-top: 4px solid #cccccc;
-    }
-    .ch-1 { border-top-color: #2563eb; }
-    .ch-2 { border-top-color: #059669; }
-    .ch-3 { border-top-color: #d97706; }
-    .ch-4 { border-top-color: #db2777; }
-    .ch-5 { border-top-color: #7c3aed; }
-    .ch-num { font-size: 22px; font-weight: 800; color: #14182a; }
-    .ch-label { font-size: 12.5px; color: #8a8578; margin-top: 4px; font-weight: 600; }
+/* KPI 카드 - 카테고리별 강조색 */
+.kpi-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px 20px;
+    text-align: center;
+    box-shadow: 0 4px 14px rgba(20,24,42,0.06);
+    border-left: 5px solid #cccccc;
+}
+.kpi-blue   { border-left-color: #2563eb; }
+.kpi-green  { border-left-color: #059669; }
+.kpi-gold   { border-left-color: #b8923f; }
+.kpi-purple { border-left-color: #7c3aed; }
+.kpi-num { font-size: 27px; font-weight: 800; color: #14182a; }
+.kpi-label { font-size: 13px; color: #8a8578; margin-top: 6px; font-weight: 600; }
 
-    /* 상태 배지 */
-    .badge-paid { background:#e6f7ec; color:#1a7f37; padding:3px 10px; border-radius:12px; font-size:12.5px; font-weight:700; }
-    .badge-wait { background:#fff3e0; color:#b45309; padding:3px 10px; border-radius:12px; font-size:12.5px; font-weight:700; }
-    .badge-sent { background:#e8f0fe; color:#1a56db; padding:3px 10px; border-radius:12px; font-size:12.5px; font-weight:700; }
+/* 채널 카드 (상단 5개) */
+.channel-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px 10px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(20,24,42,0.05);
+    border-top: 4px solid #cccccc;
+}
+.ch-1 { border-top-color: #2563eb; }
+.ch-2 { border-top-color: #059669; }
+.ch-3 { border-top-color: #d97706; }
+.ch-4 { border-top-color: #db2777; }
+.ch-5 { border-top-color: #7c3aed; }
+.ch-num { font-size: 22px; font-weight: 800; color: #14182a; }
+.ch-label { font-size: 12.5px; color: #8a8578; margin-top: 4px; font-weight: 600; }
 
-    /* 버튼 기본 스타일 고급화 */
-    div.stButton > button {
-        border-radius: 10px !important;
-        font-weight: 700 !important;
-    }
+/* 상태 배지 */
+.badge-paid { background:#e6f7ec; color:#1a7f37; padding:3px 10px; border-radius:12px; font-size:12.5px; font-weight:700; }
+.badge-wait { background:#fff3e0; color:#b45309; padding:3px 10px; border-radius:12px; font-size:12.5px; font-weight:700; }
+.badge-sent { background:#e8f0fe; color:#1a56db; padding:3px 10px; border-radius:12px; font-size:12.5px; font-weight:700; }
 
-    /* 탭 스타일 */
-    .stTabs [data-baseweb="tab-list"] { gap: 4px; }
-    .stTabs [data-baseweb="tab"] {
-        background-color: #f0ece2;
-        border-radius: 10px 10px 0 0;
-        padding: 10px 18px;
-        font-weight: 700;
-        color: #6b6558;
-    }
-    .stTabs [aria-selected="true"] {
-        background-color: #ffffff !important;
-        color: #b8923f !important;
-        border-bottom: 3px solid #b8923f !important;
-    }
-    </style>
-'''), unsafe_allow_html=True)
+/* 버튼 기본 스타일 고급화 */
+div.stButton > button {
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+}
+
+/* 탭 스타일 */
+.stTabs [data-baseweb="tab-list"] { gap: 4px; }
+.stTabs [data-baseweb="tab"] {
+    background-color: #f0ece2;
+    border-radius: 10px 10px 0 0;
+    padding: 10px 18px;
+    font-weight: 700;
+    color: #6b6558;
+}
+.stTabs [aria-selected="true"] {
+    background-color: #ffffff !important;
+    color: #b8923f !important;
+    border-bottom: 3px solid #b8923f !important;
+}
+'''
+
+# 마크다운이 들여쓰기된 텍스트를 "코드블록"으로 잘못 인식하는 문제를 원천 차단하기 위해
+# 모든 줄의 앞뒤 공백을 강제로 제거한 뒤 한 줄짜리 <style> 태그로 주입합니다.
+_CSS_FLAT = " ".join(line.strip() for line in _RAW_CSS.strip().splitlines())
+st.markdown(f"<style>{_CSS_FLAT}</style>", unsafe_allow_html=True)
+
+
 
 # ==================================================================
 # 로그인 게이트
@@ -550,23 +558,17 @@ with tab2:
         st.info("아직 등록된 신청 고객이 없습니다. 왼쪽 사이드바에서 등록해주세요.")
 
     st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown(textwrap.dedent("""
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <form action="/" method="get">
-                <button type="submit" name="run_pdf" value="true" style="
-                    background: linear-gradient(135deg, #a8382a, #d1493a);
-                    color: white;
-                    font-size: 16px;
-                    font-weight: bold;
-                    padding: 12px 28px;
-                    border: none;
-                    border-radius: 10px;
-                    cursor: pointer;
-                    box-shadow: 0 4px 14px rgba(168, 56, 42, 0.35);
-                ">프리미엄 사주분석 PDF생성 시작</button>
-            </form>
-        </div>
-    """), unsafe_allow_html=True)
+    _pdf_btn_style = ("background: linear-gradient(135deg, #a8382a, #d1493a); color: white; "
+                       "font-size: 16px; font-weight: bold; padding: 12px 28px; border: none; "
+                       "border-radius: 10px; cursor: pointer; box-shadow: 0 4px 14px rgba(168, 56, 42, 0.35);")
+    _pdf_btn_html = (
+        '<div style="display: flex; justify-content: center; align-items: center;">'
+        '<form action="/" method="get">'
+        f'<button type="submit" name="run_pdf" value="true" style="{_pdf_btn_style}">'
+        '프리미엄 사주분석 PDF생성 시작</button>'
+        '</form></div>'
+    )
+    st.markdown(_pdf_btn_html, unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
 
     query_params = st.query_params
